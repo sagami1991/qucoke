@@ -1,0 +1,22 @@
+.button {
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+	border: none;
+	cursor: pointer;
+	height: 30px;
+	line-height: 30px;
+	font-size: 16px;
+	border-radius: 3px;
+	background-color: #fdfdfd;
+	padding: 0 20px;
+	font-weight: 500;
+	color: $fontGray;
+	display: flex;
+	align-items: center;
+	.material-icons {
+		font-size: 18px;
+		margin-right: 4px;
+	}
+	&:hover, &.hover {
+		background-color: #e0e0e0;
+	}
+}

@@ -1,0 +1,61 @@
+.topic-page {
+	.border {
+		margin: 10px 0;
+	}
+
+	.comment-row {
+		margin: 8px 0;
+		display: flex;
+		flex-direction: column;
+		.post-date {
+			margin-right: 4px;
+			margin-left: auto;
+			font-size: 12px;
+		}
+		
+		.comment-body {
+			margin-left: 10px;
+			border-radius: 3px;
+			position: relative;
+			border:1px solid $lightGray;
+			background-color: $white;
+			font-size: 14px;
+			padding:20px;
+			white-space: pre-line;
+
+
+			&:before, &:after {
+				content: "";
+				position: absolute;
+				top: 50%;
+				display: block;
+				border-style: solid;
+				width: 0px;
+				height: 0px;
+			}
+			&:before {
+				left: -8px;
+				margin-top: -9px;
+				border-width: 9px 9px 9px 0;
+				border-color: transparent $white transparent transparent;
+				z-index: 0;
+			}
+			&:after {
+				left: -9px;
+				margin-top: -10px;
+				border-width: 10px 10px 10px 0;
+				border-color: transparent $lightGray transparent transparent;
+				z-index: -1;
+			}
+		}
+	}
+
+	.post-comment-container {
+		.textarea {
+			width: 80%;
+			padding: 4px 8px;
+			line-height: 1.6;
+			border:1px solid $lightGray;
+		}
+	}
+}

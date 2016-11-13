@@ -1,0 +1,83 @@
+$white: #fefefe;
+$lightBlue: rgba(0, 188, 212, 0.8);
+$lightGray: #d4d4d4;
+$fontGray: #4e4e4e;
+$bgWhite: #fbfbfb;
+$baseWidth: 980px;
+
+// ページ
+@import "./top";
+@import "./topic";
+@import "./topics";
+
+// パーツ部品
+@import "./components/button";
+@import "./components/header-footer";
+@import "./components/humane";
+@import "./components/material-icons";
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body, h1, h2, h3, p {
+	margin: 0;
+}
+
+body, button, input {
+	font-family: 'Roboto', "Yu Gothic", "游ゴシック", 'Meiryo UI','メイリオ';
+}
+
+body {
+	background-color: $bgWhite;
+	color: $fontGray;
+	margin-bottom: 90px;
+}
+
+h1, h2 {
+	font-weight: 500;
+}
+
+a {
+    color: #2156a5;
+    text-decoration: none;
+    line-height: inherit;
+}
+
+ul {
+	margin: 0;
+	list-style: none;
+	padding: 0;
+}
+
+li {
+	display: block;
+}
+.font-16 {font-size: 16px;}
+.font-24 {font-size: 24px;}
+.font-32 {font-size: 32px;}
+
+.color-adoc {
+	color: #ba3c23;
+
+}
+
+.prefix-icon-container {
+	display: flex;
+	align-items: center;
+	.material-icons {
+		margin-right: 6px;
+	}
+}
+
+.content {
+	padding: 0 20px;
+	max-width: $baseWidth;
+	margin: 20px auto;
+	line-height: 1.6;
+}
+
+.border {
+	border-bottom:1px solid $lightGray;
+}

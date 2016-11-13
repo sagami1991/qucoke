@@ -1,0 +1,40 @@
+.header {
+	background-color: $lightBlue;
+	color: $white;
+	box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+	.header-container {
+		margin: auto;
+		height: 60px;
+		display: flex;
+		align-items: center;
+		max-width: $baseWidth;
+		.logo-link {
+			display: block;
+			height: 40px;
+		}
+		.header-logo-text {
+			font-size: 24px;
+			font-weight: bold;
+		}
+		.header-buttons-container {
+			margin-right: 0;
+			margin-left: auto;
+			display: flex;
+			.button {
+				display: flex;
+				align-items: center;
+				margin-right: 6px;
+			}
+		}
+	}
+}
+
+.footer {
+	bottom: 0;
+	right: 0;
+	left: 0;
+	position: absolute;
+	background-color: rgb(33, 33, 33);
+	padding: 30px;
+	color: rgba(255, 255, 255, 0.541176);
+}

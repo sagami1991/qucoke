@@ -1,0 +1,42 @@
+.topics-page {
+	.topics-ul {
+		padding-left: 1em;
+	}
+	.topics-li {
+		display: flex;
+		padding: 10px 0;
+		border-bottom: 1px solid $lightGray;
+		.right-parts {
+			margin: 0 0 0 auto;
+			.view-count {
+				margin-bottom: 4px;
+			}
+		}
+		.title {
+			font-size: 18px;
+			font-weight: 500px;
+		}
+		.post-date {
+			font-size: 12px;
+		}
+		.tags {
+			display: flex;
+			.tag {
+				padding: 0 6px;
+				border-radius: 3px;
+				margin-right: 3px;
+				font-size: 12px;
+				background-color: #d2d2d2;
+			}
+		}
+		.view-count, .comment-count {
+			font-size: 12px;
+			.material-icons {
+				margin-right: 4px;
+			}
+
+			display: flex;
+			align-items: center;
+		}
+	}
+} 

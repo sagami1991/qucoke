@@ -1,0 +1,40 @@
+.top-page {
+
+	.top-panel {
+		background-color: $lightBlue;
+		color: rgba(255, 255, 255, 0.870588);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		padding: 0 30px 30px 30px;
+		box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+		.logo-title-text {
+			font-size: 16px;
+		}
+	}
+	
+	.top-content {
+		font-size: 16px;
+		margin-left: 2em;
+	}
+	.links-container {
+		margin-top: 10px;
+		display: flex;
+		a {
+			font-weight: bold;
+			color: white;
+			margin-right: 20px;
+			text-decoration: none;
+			padding: 6px;
+			border-bottom: 2px solid rgba(185, 236, 255, 0.74);;
+			.material-icons {
+				color: #4e4e4e;
+			}
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.1);
+				border-bottom-color: $white;
+			}
+		}
+	}
+}
