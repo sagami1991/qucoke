@@ -1,0 +1,22 @@
+<meta name="topic-id" data-value="{{topicId}}">
+<div class="content topic-edit-page">
+	<div class="edit-preview-container">
+		<div class="edit-panel">
+			<h2 class="my-header">Editor</h2>
+			<div class="edit-container child-container"></div>
+		</div>
+		<div class="preview-panel">
+			<h2 class="my-header">Preview</h2>
+			<div class="preview-container child-container">
+				<div id="header"><h1 id="preview-title"></h1></div>
+				<div id="preview-content"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="/vs/loader.js"></script>
+<script>
+	require.config({ paths: { 'vs': '/vs' }});
+</script>
+<script src="/topic-edit-app.js"></script>

@@ -9,7 +9,8 @@
 			"express",
 			"request",
             "express-handlebars",
-            "handlebars"
+            "handlebars",
+			"mongodb"
 		],
 		"lib": [
 			"es2016"

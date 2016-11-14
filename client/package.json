@@ -14,11 +14,14 @@
     "core-js": "^2.4.1",
     "dateformat": "^1.0.12",
     "handlebars": "^4.0.5",
-    "humane-js": "^3.2.2"
+    "humane-js": "^3.2.2",
+    "marked": "^0.3.6",
+    "monaco-editor": "^0.7.0"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.29",
     "@types/handlebars": "^3.0.28",
+    "@types/marked": "0.0.28",
     "@types/node": "^6.0.37",
     "copy-webpack-plugin": "^3.0.1",
     "css-loader": "^0.23.1",

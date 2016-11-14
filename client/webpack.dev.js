@@ -8,9 +8,9 @@ const CONFIG = {
 }
 module.exports = [{
 	entry: {
-		"edit-app": "./src/ts/app.ts",
 		"topic-app": "./src/ts/topic/topic-app.ts",
-		"topics-app": "./src/ts/topics/topics-app.ts"
+		"topics-app": "./src/ts/topics/topics-app.ts",
+		"topic-edit-app": "./src/ts/topic-edit/topic-edit-app.ts",
 	},
 	output: {
 		path: CONFIG.OUTPUT_PATH,
@@ -35,6 +35,7 @@ module.exports = [{
 	},
 	plugins: [
 		new CopyWebpackPlugin([
+			{ from: 'node_modules/monaco-editor/min/vs', to: 'vs'},
 			{ from: 'src/resource', to: 'resource' },
 			{ from: 'src/templates', to: '../templates' }
 		]),

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{{title}}</title>
 	<link rel="shortcut icon" type="image/x-icon" href="/resource/favicon.ico">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -21,9 +21,11 @@
 					<img src="/resource/header-logo.png" alt="Qucoke.com" height="40"/>
 				</a>
 				<div class="header-buttons-container">
+					{{#unless hidePostTopicButton}}
 					<a class="button" href="/post-topic">
 						<i class="material-icons">mode_edit</i>投稿する
 					</a>
+					{{/unless}}
 					<a class="button" href="/my-topics">
 						<i class="material-icons">account_circle</i>マイ記事一覧
 					</a>

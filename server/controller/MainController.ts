@@ -10,7 +10,8 @@ export class MainController {
 		this.app.get('/', (req, res) => this.top(req, res));
 		this.app.get('/topics', (req, res) => this.topics(req, res));
 		this.app.get('/my-topics', (req, res) => this.myTopics(req, res));
-		this.app.get('/topic-edit', (req, res) => this.editTopic(req, res));
+		this.app.get('/topic-edit/:id', (req, res) => this.editTopic(req, res));
+		this.app.get('/topic-edit/', (req, res) => this.editTopic(req, res));
 	}
 
 	/** トップページ */
@@ -30,6 +31,11 @@ export class MainController {
 
 	/** 投稿ページ */
 	private editTopic(req: Request, res: Response) {
-		res.render("topic-edit");
+		const topicId = req.params["topic-id"];
+		res.render("topic-edit", {
+			title: topicId ? "記事を編集" : "記事を作成",
+			hidePostTopicButton: true,
+			topicId: topicId
+		});
 	}
 }

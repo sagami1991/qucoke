@@ -4,10 +4,12 @@
         "module": "commonjs",
         "noImplicitAny": true,
         "sourceMap": true,
+		"lib": ["dom"],
         "types": [
             "node",
             "handlebars",
-            "core-js"
+            "core-js",
+			"marked"
         ]
     },
     "include": [

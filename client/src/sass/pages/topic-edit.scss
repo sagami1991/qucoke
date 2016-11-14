@@ -1,0 +1,21 @@
+.topic-edit-page {
+	.edit-preview-container {
+		display: flex;
+		.edit-panel {
+			width: 49%;
+			margin-right: 2%;
+		}
+		.preview-panel {
+			width: 49%;
+			.preview-container{
+				padding: 10px;
+				overflow-y: auto;
+			}
+		}
+
+		.child-container {
+			height:600px;
+			border:1px solid #d8d8d8;
+		}
+	}
+}

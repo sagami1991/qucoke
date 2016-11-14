@@ -4,9 +4,16 @@ import * as express from 'express';
 import * as exphbs from 'express-handlebars';
 import {MainController} from "./controller/MainController";
 import dateFormat = require('dateformat');
+import {MongoClient, Db} from 'mongodb';
 
 class Application {
 	public static init() {
+		this.connectDatabase().then(() => {
+			this.initWebApp();
+		});
+	}
+
+	private static initWebApp() {
 		const server = createServer();
 		const app = express();
 
@@ -23,7 +30,17 @@ class Application {
 		new MainController(app).init();
 		app.use(express.static(__dirname + '/public'));
 		server.on('request', app);
-		server.listen(process.env.PORT || 3000, () => console.log('server on port %s', server.address().port));
+		server.listen(process.env.PORT || 3000, () => console.log(`server on port ${server.address().port}`));
+	}
+
+	private static connectDatabase() {
+		return new Promise(resolve => {
+			MongoClient.connect(process.env.MONGODB_URI , (err, db) => {
+				if (err) throw err;
+				console.log(`success connect Mongodb ${db.databaseName}`);
+				resolve(db);
+			});
+		});
 	}
 }
 

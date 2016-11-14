@@ -15,17 +15,17 @@ gulp.task('ts', function () {
 
 
 gulp.task('watch', function() {
+	process.env['MONGODB_URI'] = 'mongodb://localhost:27017';
 	gulp.start(["ts", "server"]);
 	gulp.watch(['./server/**/*.{ts,hbs}'], ['ts', "server"]);
 });
 
 
 gulp.task('server',["ts"], function() {
-  if (node) node.kill()
+  if (node) {
+	  node.kill()
+  }
   node = spawn('node', ['./server/server.js'], {stdio: 'inherit'})
-  node.on('close', function (code) {
-    if (code === 8) {
-    }
-  });
-})
+});
+
 gulp.task('default', ["ts"]);
