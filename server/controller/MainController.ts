@@ -1,5 +1,7 @@
-import {Express, Request, Response} from 'express';
+import {Express, Request, Response,} from 'express';
 import {TopicController} from "./TopicController";
+import {CONF_VAR} from "../share/Interfaces";
+import * as uuid from "node-uuid";
 export class MainController {
     private topicController: TopicController;
 	constructor(private app: Express ) {
@@ -7,11 +9,19 @@ export class MainController {
 		this.topicController.init();
     };
 	public init() {
+		this.app.all('/**', (req, res, next) => this.addPersonCookie(req, res, next));
 		this.app.get('/', (req, res) => this.top(req, res));
 		this.app.get('/topics', (req, res) => this.topics(req, res));
 		this.app.get('/my-topics', (req, res) => this.myTopics(req, res));
 		this.app.get('/topic-edit/:id', (req, res) => this.editTopic(req, res));
 		this.app.get('/topic-edit/', (req, res) => this.editTopic(req, res));
+	}
+
+	private addPersonCookie(req: Request, res: Response, next: (err?: any) => void) {
+		if (typeof req.cookies[CONF_VAR.COOKIE_PID] === "undefined") {
+			res.cookie(CONF_VAR.COOKIE_PID, uuid.v4());
+		}
+		next();
 	}
 
 	/** トップページ */

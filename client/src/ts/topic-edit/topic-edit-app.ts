@@ -1,82 +1,60 @@
-/// <reference path="../../../node_modules/monaco-editor/monaco.d.ts" />
-import "../commons/dependencies";
-import * as marked from "marked";
 /**
  * @file 記事の作成・編集ページ
  */
-
+import "../commons/dependencies";
+import {MonacoWrapper} from "./monaco-editor-wrapper";
+import {MyRequest} from "../commons/request";
+import {ResPostTopic} from "../../../../server/share/Interfaces";
+interface TopicEditForm {
+	title: string;
+	tags: string[];
+	bodyMd: string;
+}
 
 class TopicEditApp {
-	private editor: monaco.editor.IStandaloneCodeEditor;
-	/** 描写スケジュール登録してあったらtrue */
-	private isScheduled: boolean;
-	private renderTimer: number;
-	private previewContent: HTMLElement;
+	private titleInput: HTMLInputElement;
+	private tagsInput: HTMLInputElement;
+	private monacoWrapper: MonacoWrapper;
+
 	public static start() {
 		(<any>window).require(['vs/editor/editor.main'], () => {
-			new TopicEditApp().init();
+			new this().init();
 		});
 	}
 
 	private init() {
-		this.previewContent = <HTMLElement> document.querySelector("#preview-content");
-		this.setSnipets();
-		this.editor = monaco.editor.create(<HTMLElement> document.querySelector(".edit-container"), {
-			value: require("raw!./sample-md.md"),
-			language: "markdown",
-			renderWhitespace: "all",
+		this.monacoWrapper = new MonacoWrapper();
+		this.monacoWrapper.init();
+		this.titleInput = <HTMLInputElement> document.querySelector(".input-title");
+		this.tagsInput = <HTMLInputElement> document.querySelector(".input-tags");
+		const submitButton = <HTMLButtonElement> document.querySelector(".submit-button");
+		submitButton.addEventListener("click", () => {
+			MyRequest.rest<ResPostTopic>({
+				method: "POST",
+				path: "/api/topic",
+				reqBody: this.getValues()
+			}).then((res) => {
+				window.location.href = `/topic/${res.id}`;
+			});
 		});
-		this.editor.onDidChangeModelContent(e => this.setRenderSchedule());
-		this.render();
+		this.registerTagHighLight();
 	}
 
-		/** renderをn秒後にセットする */
-	private setRenderSchedule() {
-		if (this.isScheduled) {
-			window.clearTimeout(this.renderTimer);
-		} else {
-			this.isScheduled = true;
+	/** タグがハイライト化するようにする */
+	private registerTagHighLight() {
+		const tagsHighlight = <HTMLElement> document.querySelector(".tags-highlight");
+		this.tagsInput.addEventListener("keyup", (e) => {
+			tagsHighlight.innerHTML = this.tagsInput.value.split(" ")
+				.map(tag => `<span class="tag-highlight">${tag}</span> `).join("");
+		});
+	}
+
+	private getValues(): TopicEditForm {
+		return {
+			title: this.titleInput.value,
+			tags: this.tagsInput.value.split(" "),
+			bodyMd: this.monacoWrapper.getValue()
 		}
-		this.renderTimer = window.setTimeout(() => {
-			this.render();
-			this.isScheduled = false;
-		}, 500);
-	}
-
-	/** プレビュー領域に描写する */
-	private render() {
-		this.previewContent.innerHTML = marked(this.editor.getValue());
-	}
-
-	private setSnipets() {
-		monaco.languages.registerCompletionItemProvider("markdown", {
-			provideCompletionItems: (model, position, token) => {
-				return [
-					{
-						label: "image",
-						kind: monaco.languages.CompletionItemKind.Text,
-						documentation: "画像",
-						insertText: "![alt](http://imagelink)"
-					},{
-						label: "link",
-						kind: monaco.languages.CompletionItemKind.Text,
-						documentation: "リンク",
-						insertText: "[text](http://link)"
-					},{
-						label: "table",
-						kind: monaco.languages.CompletionItemKind.Text,
-						documentation: "テーブル",
-						insertText: require("raw!./sample-table.md"),
-					},{
-						label: "2ch",
-						kind: monaco.languages.CompletionItemKind.Text,
-						documentation: "2ch引用",
-						insertText: require("raw!./sample-2ch.md"),
-					},
-				]
-			}
-		});
-
 	}
 }
 

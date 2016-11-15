@@ -4,11 +4,10 @@
         "module": "commonjs",
         "noImplicitAny": true,
         "sourceMap": true,
-		"lib": ["dom"],
+		"lib": ["es2015","dom"],
         "types": [
-            "node",
+			"node",
             "handlebars",
-            "core-js",
 			"marked"
         ]
     },

@@ -5,7 +5,7 @@ import * as exphbs from 'express-handlebars';
 import {MainController} from "./controller/MainController";
 import dateFormat = require('dateformat');
 import {MongoClient, Db} from 'mongodb';
-
+import * as cookieParser from "cookie-parser";
 class Application {
 	public static init() {
 		this.connectDatabase().then(() => {
@@ -27,6 +27,7 @@ class Application {
 		}));
 		app.set('views', `${__dirname}/templates`);
 		app.set('view engine', '.hbs');
+		app.use(cookieParser());
 		new MainController(app).init();
 		app.use(express.static(__dirname + '/public'));
 		server.on('request', app);

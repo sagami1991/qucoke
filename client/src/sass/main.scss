@@ -4,12 +4,13 @@ $lightGray: #d4d4d4;
 $fontGray: #4e4e4e;
 $bgWhite: #fbfbfb;
 $baseWidth: 980px;
-
+$orange: #ba3c23;
 // ページ
-@import "./top";
-@import "./topic";
-@import "./topics";
+@import "./pages/top";
+@import "./pages/topic";
+@import "./pages/topics";
 @import "./pages/topic-edit";
+@import "./pages/markdown";
 
 // パーツ部品
 @import "./components/button";
@@ -22,15 +23,12 @@ html {
 	min-height: 100%;
 }
 
-body, h1, h2, h3, p {
-	margin: 0;
-}
-
 body, button, input {
 	font-family: 'Roboto', "Yu Gothic", "游ゴシック", 'Meiryo UI','メイリオ';
 }
 
 body {
+	margin: 0;
 	background-color: $bgWhite;
 	color: $fontGray;
 	margin-bottom: 90px;
@@ -46,23 +44,25 @@ a {
     line-height: inherit;
 }
 
-ul {
-	margin: 0;
-	list-style: none;
-	padding: 0;
+input[type="text"],
+textarea {
+	outline: none;
+	border: 1px solid #aaa;
+	-webkit-transition: all .3s;
+	transition: all .3s;
+}
+input[type="text"]:focus,
+textarea:focus {
+	box-shadow: 0 0 7px $lightBlue;
+	border: 1px solid $lightBlue;
 }
 
-li {
-	display: block;
-}
+.h1, .h2, .h3 { margin:0 }
 .font-16 {font-size: 16px;}
 .font-24 {font-size: 24px;}
 .font-32 {font-size: 32px;}
 
-.color-adoc {
-	color: #ba3c23;
-
-}
+.color-adoc { color: #ba3c23; }
 
 .prefix-icon-container {
 	display: flex;

@@ -10,7 +10,8 @@
 			"request",
             "express-handlebars",
             "handlebars",
-			"mongodb"
+			"mongodb",
+			"node-uuid"
 		],
 		"lib": [
 			"es2016"

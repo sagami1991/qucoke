@@ -1,5 +1,10 @@
 import {Express, Request, Response} from 'express';
-import {TopicInfo} from "../share/Interfaces";
+import {CONF_VAR,
+	TopicInfo,
+	TopicEditForm,
+	ValidateRules
+} from "../share/Interfaces";
+
 export class TopicController {
 	constructor(private app: Express ) {}
 	public init() {
@@ -46,7 +51,33 @@ export class TopicController {
 		res.render("topic", {title: topic.title, topic: topic});
 	}
 
+	/** 記事を新規投稿 */
 	private addTopic(req: Request, res: Response) {
+		const reqBody = <TopicEditForm> req.body;
+		console.log(reqBody);
+		this.validateTopicEditForm(reqBody);
+
+
+	}
+
+	private validateTopicEditForm(reqBody: TopicEditForm) {
+		const validateRules: ValidateRules[] = [
+			{ rule: typeof reqBody.title === "string"},
+			{ rule: reqBody.title.length > 0, msg: "タイトルが未入力です"},
+			{ rule: reqBody.title.length < 40, msg: "タイトルは40文字以内で入力してください"},
+			{ rule: reqBody.tags instanceof Array},
+			{ rule: reqBody.tags.length < 5, msg: "タグは4個以内に設定してください"},
+			{ rule: typeof reqBody.bodyMd === "string"},
+			{ rule: reqBody.bodyMd.length > 300000, msg: "記事の内容が300KBを超えています"}
+		];
+
+		for ( let {rule, msg} of validateRules) {
+			console.log(rule);
+			if (!rule) {
+				const errMsg = msg ? msg : CONF_VAR.ERR_MSG.unexpected_error;
+				throw new Error(errMsg);
+			}
+		}
 
 	}
 

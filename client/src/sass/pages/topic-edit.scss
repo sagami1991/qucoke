@@ -1,15 +1,62 @@
 .topic-edit-page {
+	padding: 10px;
+	.input-title-container,
+	.input-tags-container {
+		margin: 2px;
+		position: relative;
+		width: 100%;
+	}
+
+	.input-title, .input-tags {
+		width: 100%;
+		border-radius: 3px;
+		box-sizing: border-box;
+		padding: 4px 8px;
+	}
+	.input-title {
+		font-size: 24px;
+	}
+
+	.input-tags {
+		font-size: 16px;
+		background: transparent;
+	}
+	.tags-highlight {
+		font-size: 16px;
+		padding: 4px 8px;
+		position: absolute;
+		color: transparent;
+		white-space: nowrap;
+		background-color: white;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		z-index: -1;
+		span {
+			border-radius: 2px;
+			background-color: rgba(50, 200, 219, 0.23);;
+			box-shadow: 0 0 0 1px #289cab;
+		}
+	}
+	.buttons-row {
+		display: flex;
+		margin: 16px 0;
+		justify-content: center;
+	}
 	.edit-preview-container {
 		display: flex;
 		.edit-panel {
-			width: 49%;
-			margin-right: 2%;
+			width: 50%;
+			margin-right: 1%;
 		}
 		.preview-panel {
 			width: 49%;
 			.preview-container{
-				padding: 10px;
 				overflow-y: auto;
+				#preview-content {
+					padding: 10px;
+				}
 			}
 		}
 

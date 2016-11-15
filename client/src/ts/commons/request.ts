@@ -2,6 +2,7 @@
 interface MyRequestOption {
 	method: "GET" | "POST" | "PUT" | "DELETE";
 	path: string;
+	reqBody?: any;
 }
 
  export class MyRequest {
@@ -17,7 +18,11 @@ interface MyRequestOption {
 				resolve(<T> JSON.parse(xhr.responseText));
 			};
 			xhr.onerror = () => reject();
-			xhr.send();
+			if (option.reqBody) {
+				xhr.send(JSON.stringify(option.reqBody));
+			} else {
+				xhr.send();
+			}
 		});
 	 }
  }
