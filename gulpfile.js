@@ -3,7 +3,7 @@ var ts = require("gulp-typescript");
 var tsProject = ts.createProject('tsconfig.json', {typescript: require('typescript')});
 var sourcemaps = require('gulp-sourcemaps');
 const spawn = require('child_process').spawn;
-let node;
+var node;
 
 gulp.task('ts', function () {
 	return gulp.src(['./server/**/*.ts', '!./server/**/*.spec.ts'])
