@@ -1,0 +1,38 @@
+/** js読み込み中のアニメーション */
+
+.loading:after{
+    border-radius: 50%;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #00897b;
+    border-right-color: transparent;
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    height: 200px;
+    width: 200px;
+    content: ' ';
+    margin-left: -64px;
+    animation-name: spin;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: 99;
+}
+
+.loading:before{
+    content: ' ';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    background-color: white;
+    opacity: 0.7;
+}
+
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	to   { transform: rotate(360deg); }
+}

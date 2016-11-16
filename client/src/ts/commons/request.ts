@@ -1,3 +1,5 @@
+import "core-js/es6/promise";
+import {SmartDialog, IconType} from "../commons/smart-dialog";
 
 interface MyRequestOption {
 	method: "GET" | "POST" | "PUT" | "DELETE";
@@ -7,22 +9,36 @@ interface MyRequestOption {
 
  export class MyRequest {
 	 /** JSONのみ対応 */
-	 static rest<T>(option: MyRequestOption) {
+	 static rest<T>(option: MyRequestOption): Promise<T> {
+		this.toggleLoadingAnime(true);
 		return new Promise<T>((resolve, reject) => {
 			const xhr = new XMLHttpRequest();
 			xhr.open(option.method, option.path);
 			xhr.onload = () => {
+				this.toggleLoadingAnime(false);
 				if (xhr.status !== 200) {
-					reject();
+					SmartDialog.open({
+						dialogType: "ERROR",
+						msg: JSON.parse(xhr.responseText).message
+					});
+				} else {
+					resolve(JSON.parse(xhr.responseText));
 				}
-				resolve(<T> JSON.parse(xhr.responseText));
 			};
-			xhr.onerror = () => reject();
+			xhr.onerror = () => {
+				this.toggleLoadingAnime(false);
+				reject();
+			};
 			if (option.reqBody) {
+				xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 				xhr.send(JSON.stringify(option.reqBody));
 			} else {
 				xhr.send();
 			}
 		});
+	 }
+
+	 private static toggleLoadingAnime(isOn: boolean) {
+		 document.body.classList.toggle("loading", isOn);
 	 }
  }

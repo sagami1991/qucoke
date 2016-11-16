@@ -1,10 +1,10 @@
 /**
  * @file 記事の作成・編集ページ
  */
-import "../commons/dependencies";
 import {MonacoWrapper} from "./monaco-editor-wrapper";
 import {MyRequest} from "../commons/request";
 import {ResPostTopic} from "../../../../server/share/Interfaces";
+
 interface TopicEditForm {
 	title: string;
 	tags: string[];
@@ -52,7 +52,7 @@ class TopicEditApp {
 	private getValues(): TopicEditForm {
 		return {
 			title: this.titleInput.value,
-			tags: this.tagsInput.value.split(" "),
+			tags: this.tagsInput.value ? this.tagsInput.value.split(" ") : [],
 			bodyMd: this.monacoWrapper.getValue()
 		}
 	}

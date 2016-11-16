@@ -1,26 +1,30 @@
-<div class="content topic-page">
-	<h1 class="h1">{{topic.title}}</h1>
-	<div class="border"></div>
+<div class="topic-page">
+	<div class="content">
+		<div class="markdown-container">
+			<h1 class="h1">{{topic.title}}</h1>
+			{{{topic.bodyHtml}}}
+		</div>
+		{{#if topic.comments.length}}
+			<div class="border"></div>
+			<div class="comennts">
+				<h2 class="h2 font-16">コメント一覧</h2>
+				{{#each topic.comments}}
+					<div class="comment-row">
+						<div class="post-date">{{myDateFormat postDate}}</div>
+						<div class="comment-body">{{body}}</div>
+					</div>
+				{{/each}}
 
-	{{topic.bodyHtml}}
-
-	<div class="border"></div>
-
-	<div class="comennts">
-		<h2 class="h2 font-16">コメント一覧</h2>
-		{{#each topic.comments}}
-			<div class="comment-row">
-				<div class="post-date">{{myDateFormat postDate}}</div>
-				<div class="comment-body">{{body}}</div>
 			</div>
-		{{/each}}
-
+		{{/if}}
+		<div class="border"></div>
+		<form class="post-comment-container">
+			<h2 class="h2 font-16">コメントを投稿</h2>
+			<input type="hidden" name="topic-id" value="{{topic._id}}">
+			<textarea name="comment" rows="4" placeholder="コメントを入力" class="textarea"></textarea>
+			<button class="button" type="submit"><i class="material-icons">edit</i>投稿</button>
+		</form>
 	</div>
-	<div class="border"></div>
-	<form class="post-comment-container">
-		<h2 class="h2 font-16">コメントを投稿</h2>
-		<input type="hidden" name="topic-id" value="{{topic.id}}">
-		<textarea name="comment" rows="4" placeholder="コメントを入力" class="textarea"></textarea>
-		<button class="button" type="submit"><i class="material-icons">edit</i>投稿</button>
-	</form>
 </div>
+
+<script src="/topic-app.js"></script>

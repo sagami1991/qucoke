@@ -1,87 +1,114 @@
 import {Express, Request, Response} from 'express';
+import {Collection} from 'mongodb';
 import {CONF_VAR,
 	TopicInfo,
 	TopicEditForm,
-	ValidateRules
+	ValidateRule,
+	Comment
 } from "../share/Interfaces";
 
+import {myValidate, sendError} from "../share/util";
+import * as marked from "marked";
+import {TopicRepository} from "../repository/TopicRepository";
+
 export class TopicController {
-	constructor(private app: Express ) {}
+	constructor(private app: Express,
+				private topicRepository: TopicRepository) {}
 	public init() {
 		this.app.get('/topic/:id', (req, res) => this.getTopic(req, res));
-        this.app.get("/api/topics", (req, res) => this.getTopics(req, res));
-        this.app.post("/api/topic/comment", (req, res) => this.addComment(req, res));
-        this.app.post("/api/topic", (req, res) => this.addTopic(req, res));
+		this.app.get("/api/topics", (req, res) => this.getTopics(req, res));
+		this.app.post("/api/topic/:id/comment/", (req, res) => this.addComment(req, res));
+		this.app.post("/api/topic", (req, res) => this.addTopic(req, res));
 	}
 
-    /** 記事一覧を渡す */
-    private getTopics(req: Request, res: Response) {
-        const topics: TopicInfo[] = [];
-		for (let i = 0; i < 40; i++) {
-			topics.push({
-				id: "" + i,
-				postDate: new Date(),
-				title: "今日は何の日きになるきになるきになるきになるきになる",
-				tags: ["自作PC", "競馬", "風俗"],
-				commentCount: 5,
-				viewCount: 1002,
-				comments: [],
-				bodyMd: "",
-				bodyHtml: undefined
-			});
+	/** 記事一覧を渡す */
+	private getTopics(req: Request, res: Response) {
+		this.topicRepository.findAllForList(30).toArray((err, arr) => {
+		if (err) {
+			sendError(res, err.message);
+			return;
 		}
-		res.send(topics);
-    }
+		res.send(arr.sort((bef, af ) => af.postDate - bef.postDate));
+		});
+	}
 
 	private getTopic(req: Request, res: Response) {
-		const topic: TopicInfo = {
-				id: "",
-				postDate: new Date(),
-				title: "今日は何の日きになるきになるきになるきになるきになる",
-				tags: ["自作PC", "競馬", "風俗"],
-				commentCount: 5,
-				viewCount: 1002,
-				comments: [{
-					postDate: new Date(),
-					body: "とてもそう思う。でも違うと思う。\nああああ明日の天気は雨"
-				}],
-				bodyMd: "",
-				bodyHtml: undefined
-			};
-		res.render("topic", {title: topic.title, topic: topic});
+		this.topicRepository.findOne(req.params["id"]).then((topic) => {
+			if (!topic) {
+				sendError(res, "存在しない記事です。");
+				return;
+			}
+			res.render("topic", {title: topic.title, topic: topic});
+		});
 	}
 
 	/** 記事を新規投稿 */
 	private addTopic(req: Request, res: Response) {
 		const reqBody = <TopicEditForm> req.body;
-		console.log(reqBody);
-		this.validateTopicEditForm(reqBody);
+		myValidate(this.validateTopicEditForm(reqBody));
+		const userId = req.cookies[CONF_VAR.COOKIE_PID]
+		const topic: TopicInfo = {
+			postDate: new Date(),
+			title: reqBody.title,
+			commentCount: 0,
+			viewCount: 0,
+			tags: reqBody.tags,
+			bodyMd: reqBody.bodyMd,
+			bodyHtml: marked(reqBody.bodyMd),
+			userId: userId,
+			comments: [],
+			favoriteCount: 0
+		};
 
+		this.topicRepository.checkRecentPost(userId).toArray((err, arr) => {
+			if (err) {
+				sendError(res, err.message);
+				return;
+			}
+			if (arr.length === 1) {
+				sendError(res, "1分以内に投稿した記事があります。しばらく待ってから投稿してください。");
+				return;
+			}
+			this.topicRepository.addOne(topic).then((result) => {
+				res.send({
+					id: result.insertedId
+				});
+			});
+		});
 
 	}
 
-	private validateTopicEditForm(reqBody: TopicEditForm) {
-		const validateRules: ValidateRules[] = [
+	private validateTopicEditForm(reqBody: TopicEditForm): ValidateRule[] {
+		return [
 			{ rule: typeof reqBody.title === "string"},
 			{ rule: reqBody.title.length > 0, msg: "タイトルが未入力です"},
 			{ rule: reqBody.title.length < 40, msg: "タイトルは40文字以内で入力してください"},
 			{ rule: reqBody.tags instanceof Array},
 			{ rule: reqBody.tags.length < 5, msg: "タグは4個以内に設定してください"},
 			{ rule: typeof reqBody.bodyMd === "string"},
-			{ rule: reqBody.bodyMd.length > 300000, msg: "記事の内容が300KBを超えています"}
+			{ rule: reqBody.bodyMd.length < 300000, msg: "記事の内容が300KBを超えています"}
 		];
-
-		for ( let {rule, msg} of validateRules) {
-			console.log(rule);
-			if (!rule) {
-				const errMsg = msg ? msg : CONF_VAR.ERR_MSG.unexpected_error;
-				throw new Error(errMsg);
-			}
-		}
-
 	}
 
 	private addComment(req: Request, res: Response) {
-		console.log(req.params["topic-id"]);
+		const reqBody = <Comment> req.body;
+		const topicId: string = req.params["id"];
+		myValidate(this.validateComment(reqBody));
+		const comment: Comment = {
+			postDate: new Date(),
+			body: reqBody.body
+		};
+		this.topicRepository.addComment(topicId, comment).then(() => {
+			res.send({});
+		});
+
+	}
+
+	private validateComment(reqBody: Comment): ValidateRule[] {
+		return [
+			{ rule: typeof reqBody.body === "string"},
+			{ rule: reqBody.body.length > 0, msg: "コメントが未入力です"},
+			{ rule: reqBody.body.length < 1000, msg: "コメントは1000文字以内で入力してください"},
+		];
 	}
 }

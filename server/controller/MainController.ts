@@ -3,13 +3,9 @@ import {TopicController} from "./TopicController";
 import {CONF_VAR} from "../share/Interfaces";
 import * as uuid from "node-uuid";
 export class MainController {
-    private topicController: TopicController;
-	constructor(private app: Express ) {
-        this.topicController = new TopicController(app);
-		this.topicController.init();
-    };
+	constructor(private app: Express ) {};
 	public init() {
-		this.app.all('/**', (req, res, next) => this.addPersonCookie(req, res, next));
+		this.app.use((req, res, next) => this.addPersonCookie(req, res, next));
 		this.app.get('/', (req, res) => this.top(req, res));
 		this.app.get('/topics', (req, res) => this.topics(req, res));
 		this.app.get('/my-topics', (req, res) => this.myTopics(req, res));

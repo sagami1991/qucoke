@@ -1,4 +1,3 @@
-import "../commons/dependencies";
 import {MyRequest} from "../commons/request";
 import {TopicInfo} from "../../../../server/share/Interfaces";
 import * as Handlebars from "handlebars";
@@ -21,7 +20,7 @@ class ListComponent {
 			<li class="topics-li">
 				<div class="left-parts">
 					<div class="post-date">{{myDateFormat postDate}}</div>
-					<a class="title" href="/topic/{{id}}">{{title}}</a>
+					<a class="title" href="/topic/{{_id}}">{{title}}</a>
 					<div class="tags">
 						{{#each tags}}
 							<div class="tag">{{this}}</div>

@@ -46,6 +46,7 @@ http://link
 
 ### 画像
 imageと入力すれば入力候補が出ます  
+画像アップロードサービスは [imgur](http://imgur.com/) 等が便利です  
 ![alt](http://archives.jpn.org/name/images/0126.jpg)
 
 ### テーブル

@@ -1,0 +1,142 @@
+//scss
+
+$dark: #1b1919 !default;
+$white: #fff !default;
+$primary: #4285f4 !default;
+$gray: #635a56 !default;
+$zindex: 1000;
+
+.smd-dialog {
+  font-family: "Yu Gothic", "游ゴシック", 'Meiryo UI','メイリオ';
+  color: $dark;
+  position: fixed;
+  z-index: $zindex + 1;
+  border-radius: 2px;
+  width: 400px;
+  margin-left: -200px;
+  background-color: $white;
+  box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2),
+              0px 24px 38px 3px rgba(0, 0, 0, 0.14),
+              0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+  left: 50%;
+  top: 50%;
+  font-size: 16px;
+
+  &.smd-show {
+    animation: bounceIn .35s ease;
+  }
+
+  &.smd-hide {
+    animation: bounceOut .35s ease;
+  }
+
+  .smd-title {
+    padding: 24px 24px 20px;
+    font-size: 20px;
+    color: $dark;
+    line-height: 1;
+
+    + .smd-content {
+      padding-top: 0;
+    }
+  }
+
+  .smd-content {
+    display: flex;
+    align-items: center;
+    text-align: justify;
+    padding: 8px;
+    padding: 24px;
+
+    .material-icons {
+        font-size: 46px;
+        margin-right: 12px;
+        &.success {color: green;}
+        &.info { color: lightskyblue}
+        &.warn {color: sandybrown}
+        &.error {color: firebrick}
+    }
+    .smd-message {
+      margin: 0;
+      padding: 0;
+      color: $gray;
+    }
+  }
+  .smd-form {
+    padding: 8px;
+    text-align: right;
+    .smd-btn-ok {color: $primary;}
+    .smd-btn-cancel {color: $gray;}
+    .smd-btn {
+        outline: 0;
+        padding: 0;
+        height: 32px;
+        line-height: 32px;
+        font-size: 16px;
+        border-radius: 3px;
+        background-color: #fdfdfd;
+        padding: 0 16px;
+        font-weight: 500;
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+        border: none;
+        cursor: pointer;
+        &:hover{
+            background-color: #e0e0e0;
+        }
+    }
+  }
+
+}
+
+@media all and (max-width: 540px) {
+  .smd-dialog {
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
+    left: 15px;
+    right: 15px;
+  }
+}
+
+.smd-overlay {
+  position: fixed;
+  background-color: #000;
+  z-index: $zindex;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0.4;
+
+}
+
+.no-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+@keyframes bounceIn {
+  0% {
+      transform: scale(0.7);
+  }
+  45% {
+    transform: scale(1.05);
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  } 
+}
+
+@keyframes bounceOut {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.5);
+  }
+}

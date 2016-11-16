@@ -6,21 +6,24 @@ export const CONF_VAR =  {
 	}
 };
 
-export interface ValidateRules {
+export interface ValidateRule {
 	rule: boolean;
 	msg?: string;
 }
 
 export interface TopicInfo {
-	id: string;
+	_id?: string;
     postDate: Date;
     title: string;
+	/** DBのカラムでは生成しない */
     commentCount: number;
     viewCount: number;
     tags: string[];
 	bodyMd: string;
 	bodyHtml: string;
+	userId: string;
 	comments: Comment[];
+	favoriteCount: number;
 }
 
 export interface TopicEditForm {
