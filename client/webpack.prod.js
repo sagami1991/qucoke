@@ -3,7 +3,7 @@ const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 const webpackMerge = require('webpack-merge');
 const devConfig = require('./webpack.dev.js');
 
-module.exports = webpackMerge(devConfig, {
+module.exports = [webpackMerge(devConfig[0], {
 	devtool: "",
 	plugins: [
 		new DedupePlugin(),
@@ -14,4 +14,5 @@ module.exports = webpackMerge(devConfig, {
 			comments: false //prod
 		})
 	],
-});
+}), devConfig[1]
+];
