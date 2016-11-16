@@ -12,6 +12,7 @@ import dateFormat = require('dateformat');
 import {MongoClient, Db} from 'mongodb';
 import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
+import * as compression from "compression";
 
 class Application {
 	private static db: Db;
@@ -38,6 +39,11 @@ class Application {
 		app.use(cookieParser());
 		app.use(bodyParser.urlencoded({ extended: false }));
 		app.use(bodyParser.json());
+		app.use(compression({
+			threshold: 0,
+			level: 9,
+			memLevel: 9
+		}));
 		const topicRepository = new TopicRepository(this.db.collection("topics"));
 		new MainController(app).init();
 		new TopicController(app, topicRepository).init();
