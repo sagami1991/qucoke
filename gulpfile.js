@@ -15,7 +15,7 @@ gulp.task('ts', function () {
 
 
 gulp.task('watch', function() {
-	if(!process.env['MONGODB_URI']) process.env['MONGODB_URI'] = 'mongodb://localhost:27017/qucoke';
+	process.env['MONGODB_URI'] = 'mongodb://localhost:27017/qucoke';
 	gulp.start(["ts", "server"]);
 	gulp.watch(['./server/**/*.{ts,hbs}'], ['ts', "server"]);
 });

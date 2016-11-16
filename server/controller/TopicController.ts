@@ -7,7 +7,7 @@ import {CONF_VAR,
 	Comment
 } from "../share/Interfaces";
 
-import {myValidate, sendError} from "../share/util";
+import {MyUtil} from "../share/util";
 import * as marked from "marked";
 import {TopicRepository} from "../repository/TopicRepository";
 
@@ -25,7 +25,7 @@ export class TopicController {
 	private getTopics(req: Request, res: Response) {
 		this.topicRepository.findAllForList(30).toArray((err, arr) => {
 		if (err) {
-			sendError(res, err.message);
+			MyUtil.sendError(res, err.message);
 			return;
 		}
 		res.send(arr.sort((bef, af ) => af.postDate - bef.postDate));
@@ -35,7 +35,7 @@ export class TopicController {
 	private getTopic(req: Request, res: Response) {
 		this.topicRepository.findOne(req.params["id"]).then((topic) => {
 			if (!topic) {
-				sendError(res, "存在しない記事です。");
+				MyUtil.sendError(res, "存在しない記事です。");
 				return;
 			}
 			res.render("topic", {title: topic.title, topic: topic});
@@ -45,7 +45,7 @@ export class TopicController {
 	/** 記事を新規投稿 */
 	private addTopic(req: Request, res: Response) {
 		const reqBody = <TopicEditForm> req.body;
-		myValidate(this.validateTopicEditForm(reqBody));
+		MyUtil.validate(this.validateTopicEditForm(reqBody));
 		const userId = req.cookies[CONF_VAR.COOKIE_PID]
 		const topic: TopicInfo = {
 			postDate: new Date(),
@@ -62,11 +62,11 @@ export class TopicController {
 
 		this.topicRepository.checkRecentPost(userId).toArray((err, arr) => {
 			if (err) {
-				sendError(res, err.message);
+				MyUtil.sendError(res, err.message);
 				return;
 			}
 			if (arr.length === 1) {
-				sendError(res, "1分以内に投稿した記事があります。しばらく待ってから投稿してください。");
+				MyUtil.sendError(res, "1分以内に投稿した記事があります。しばらく待ってから投稿してください。");
 				return;
 			}
 			this.topicRepository.addOne(topic).then((result) => {
@@ -93,7 +93,7 @@ export class TopicController {
 	private addComment(req: Request, res: Response) {
 		const reqBody = <Comment> req.body;
 		const topicId: string = req.params["id"];
-		myValidate(this.validateComment(reqBody));
+		MyUtil.validate(this.validateComment(reqBody));
 		const comment: Comment = {
 			postDate: new Date(),
 			body: reqBody.body
