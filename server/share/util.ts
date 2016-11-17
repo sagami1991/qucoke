@@ -4,6 +4,19 @@ import {CONF_VAR,
 	ValidateRule
 } from "./Interfaces";
 import {Express, Request, Response} from 'express';
+import * as marked from "marked";
+
+class MyRenderer extends marked.Renderer {
+	link(href: string, title: string, text: string) {
+		return `<a href="${href}" target="_blank">${text}</a>`;
+	}
+}
+
+export function getMarked() {
+	marked.setOptions({renderer: new MyRenderer()});
+	return marked;
+}
+
 
 export class MyUtil {
 	static validate(rules: ValidateRule[]) {

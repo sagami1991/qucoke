@@ -7,7 +7,7 @@ import {CONF_VAR,
 	Comment
 } from "../share/Interfaces";
 
-import {MyUtil} from "../share/util";
+import {MyUtil, getMarked} from "../share/util";
 import * as marked from "marked";
 import {TopicRepository} from "../repository/TopicRepository";
 
@@ -54,7 +54,7 @@ export class TopicController {
 			viewCount: 0,
 			tags: reqBody.tags,
 			bodyMd: reqBody.bodyMd,
-			bodyHtml: marked(reqBody.bodyMd),
+			bodyHtml: getMarked()(reqBody.bodyMd),
 			userId: userId,
 			comments: [],
 			favoriteCount: 0
@@ -82,7 +82,7 @@ export class TopicController {
 		return [
 			{ rule: typeof reqBody.title === "string"},
 			{ rule: reqBody.title.length > 0, msg: "タイトルが未入力です"},
-			{ rule: reqBody.title.length < 40, msg: "タイトルは40文字以内で入力してください"},
+			{ rule: reqBody.title.length < 60, msg: "タイトルは60文字以内で入力してください"},
 			{ rule: reqBody.tags instanceof Array},
 			{ rule: reqBody.tags.length < 5, msg: "タグは4個以内に設定してください"},
 			{ rule: typeof reqBody.bodyMd === "string"},

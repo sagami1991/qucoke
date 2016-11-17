@@ -1,5 +1,9 @@
 import * as marked from "marked";
-
+class MyRenderer extends marked.Renderer {
+	link(href: string, title: string, text: string) {
+		return `<a href="${href}" target="_blank">${text}</a>`;
+	}
+}
 export class MonacoWrapper {
 	private editor: monaco.editor.IStandaloneCodeEditor;
 	/** 描写スケジュール登録してあったらtrue */
@@ -7,6 +11,7 @@ export class MonacoWrapper {
 	private renderTimer: number;
 	private previewContent: HTMLElement;
 	public init() {
+		marked.setOptions({renderer: new MyRenderer()});
 		this.previewContent = <HTMLElement> document.querySelector("#preview-content");
 		this.setSnipets();
 		this.editor = monaco.editor.create(<HTMLElement> document.querySelector(".edit-container"), {

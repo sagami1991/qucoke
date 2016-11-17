@@ -43,14 +43,14 @@
 				margin-top: -9px;
 				border-width: 9px 9px 9px 0;
 				border-color: transparent $white transparent transparent;
-				z-index: 0;
+				z-index: 1;
 			}
 			&:after {
 				left: -9px;
 				margin-top: -10px;
-				border-width: 10px 10px 10px 0;
+				border-width: 10px 9px 10px 0;
 				border-color: transparent $lightGray transparent transparent;
-				z-index: -1;
+				z-index: 0;
 			}
 		}
 	}
