@@ -7,6 +7,11 @@ $baseWidth: 980px;
 $orange: #ba3c23;
 
 $mobile-width: 480px;
+
+@mixin panelShadow {
+	box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+}
+
 // ページ
 @import "./pages/top";
 @import "./pages/topic";
@@ -62,6 +67,7 @@ textarea:focus {
 }
 
 .h1, .h2, .h3 { margin:0 }
+.font-12 {font-size: 12px;}
 .font-16 {font-size: 16px;}
 .font-24 {font-size: 24px;}
 .font-32 {font-size: 32px;}

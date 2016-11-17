@@ -1,6 +1,7 @@
 
 export const CONF_VAR =  {
 	COOKIE_PID: "qucoke-person-id",
+	COOKIE_ACCESSED: "topic-accessed",
 	ERR_MSG: {
 		unexpected_error: "予期せぬエラーが発生しました",
 	}

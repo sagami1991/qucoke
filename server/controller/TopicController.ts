@@ -15,7 +15,7 @@ export class TopicController {
 	constructor(private app: Express,
 				private topicRepository: TopicRepository) {}
 	public init() {
-		this.app.get('/topic/:id', (req, res) => this.getTopic(req, res));
+		this.app.get('/topic/:id', (req, res) => this.viewTopicPage(req, res));
 		this.app.get("/api/topics", (req, res) => this.getTopics(req, res));
 		this.app.post("/api/topic/:id/comment/", (req, res) => this.addComment(req, res));
 		this.app.post("/api/topic", (req, res) => this.addTopic(req, res));
@@ -32,13 +32,19 @@ export class TopicController {
 		});
 	}
 
-	private getTopic(req: Request, res: Response) {
+	private viewTopicPage(req: Request, res: Response) {
 		this.topicRepository.findOne(req.params["id"]).then((topic) => {
 			if (!topic) {
 				MyUtil.sendError(res, "存在しない記事です。");
 				return;
 			}
-			res.render("topic", {title: topic.title, topic: topic});
+			if (!req.cookies[CONF_VAR.COOKIE_ACCESSED]) {
+				const date = new Date();
+				date.setMinutes(date.getMinutes() + 1);
+				res.cookie(CONF_VAR.COOKIE_ACCESSED, "1", {expires: date, path: req.path});
+				this.topicRepository.addViewCount(req.params["id"]);
+			}
+			res.render("topic", {title: `${topic.title} - Qucoke`, topic: topic});
 		});
 	}
 
@@ -46,7 +52,7 @@ export class TopicController {
 	private addTopic(req: Request, res: Response) {
 		const reqBody = <TopicEditForm> req.body;
 		MyUtil.validate(this.validateTopicEditForm(reqBody));
-		const userId = req.cookies[CONF_VAR.COOKIE_PID]
+		const userId = req.cookies[CONF_VAR.COOKIE_PID];
 		const topic: TopicInfo = {
 			postDate: new Date(),
 			title: reqBody.title,

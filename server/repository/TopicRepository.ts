@@ -36,6 +36,14 @@ export class TopicRepository {
 			});
 	}
 
+	public addViewCount(topicId: string) {
+		return this.topicsDb.update(
+			{_id: new ObjectID(topicId)},
+			{
+				$inc: {viewCount: 1},
+			}
+		);
+	}
 	/** 1分以内に登録したレコードがあるかチェック */
 	public checkRecentPost(userId: string) {
 		const date = new Date();

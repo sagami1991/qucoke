@@ -4,7 +4,49 @@
 	}
 	background-color: $white;
 	width: 100%;
-	
+	.topic-header {
+		background-color: rgba(78,105,109,0.8);
+		@include panelShadow();
+		.topic-header-container {
+			max-width: $baseWidth;
+			margin: 0 auto;
+			display: flex;
+			
+		}
+		.h1{
+			color:$white;
+			line-height: 90px;
+		}
+		.right-parts {
+			margin: 0 10px 0 auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			&, .material-icons {
+				color: $white;
+			}
+			.view-count {
+				margin-right: 18px;
+			}
+			.view-count, .comment-count {
+				.flex {
+					display: flex;
+					align-items: center;
+					
+				}
+				.material-icons {
+					font-size: 16px;
+					margin-right: 4px;
+				}
+				.font-12 {
+					margin-right: 4px;
+				}
+				display: flex;
+				align-items: baseline;
+			}
+		}
+
+	}
 	.markdown-container {
 		
 	}

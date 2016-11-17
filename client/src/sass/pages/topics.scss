@@ -8,7 +8,10 @@
 		padding: 10px 0;
 		border-bottom: 1px solid $lightGray;
 		.right-parts {
-			margin: 0 0 0 auto;
+			margin: 0 10px 0 auto;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
 			.view-count {
 				margin-bottom: 4px;
 			}

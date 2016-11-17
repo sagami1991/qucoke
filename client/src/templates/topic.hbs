@@ -1,7 +1,27 @@
 <div class="topic-page">
+	<div class="topic-header">
+		<div class="topic-header-container">
+			<h1 class="h1">{{topic.title}}</h1>
+			<div class="right-parts">
+				<div class="view-count">
+					<div class="flex">
+						<i class="material-icons">remove_red_eye</i>
+						<div class="font-12">PV数</div>
+					</div>
+					<div class="font-24">{{topic.viewCount}}</div>
+				</div>
+				<div class="comment-count">
+					<div class="flex">
+						<i class="material-icons">chat_bubble_outline</i>
+						<div class="font-12">コメント</div>
+					</div>
+					<div class="font-24">{{topic.commentCount}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="content">
 		<div class="markdown-container">
-			<h1 class="h1">{{topic.title}}</h1>
 			{{{topic.bodyHtml}}}
 		</div>
 		{{#if topic.comments.length}}
