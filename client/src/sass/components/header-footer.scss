@@ -9,7 +9,8 @@
 		align-items: center;
 		max-width: $baseWidth;
 		.logo-link {
-			display: block;
+			display: flex;
+			align-items: center;
 			height: 40px;
 		}
 		.header-logo-text {
@@ -35,6 +36,6 @@
 	left: 0;
 	position: absolute;
 	background-color: rgb(33, 33, 33);
-	padding: 30px;
+	height: 60px;
 	color: rgba(255, 255, 255, 0.541176);
 }

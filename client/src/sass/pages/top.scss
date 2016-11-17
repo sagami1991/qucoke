@@ -1,5 +1,8 @@
 .top-page {
-
+	overflow: hidden;
+	.h2:not(:first-child) {
+		margin-top:32px;
+	}
 	.top-panel {
 		background-color: $lightBlue;
 		color: rgba(255, 255, 255, 0.870588);
@@ -20,6 +23,9 @@
 	}
 	.links-container {
 		margin-top: 10px;
+		@media screen and (max-width: $mobile-width) {
+			display: block;
+		}
 		display: flex;
 		a {
 			font-weight: bold;

@@ -5,6 +5,8 @@ $fontGray: #4e4e4e;
 $bgWhite: #fbfbfb;
 $baseWidth: 980px;
 $orange: #ba3c23;
+
+$mobile-width: 480px;
 // ページ
 @import "./pages/top";
 @import "./pages/topic";
@@ -32,7 +34,7 @@ body {
 	margin: 0;
 	background-color: $bgWhite;
 	color: $fontGray;
-	margin-bottom: 90px;
+	margin-bottom: 60px;
 }
 
 h1, h2 {
