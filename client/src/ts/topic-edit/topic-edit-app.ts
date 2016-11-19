@@ -3,19 +3,13 @@
  */
 import {MonacoWrapper} from "./monaco-editor-wrapper";
 import {MyRequest} from "../commons/request";
-import {ResPostTopic} from "../../../../server/share/Interfaces";
-
-interface TopicEditForm {
-	title: string;
-	tags: string[];
-	bodyMd: string;
-}
+import {ResPostTopic, TopicEditForm, TopicInfo} from "../../../../server/share/Interfaces";
 
 class TopicEditApp {
 	private titleInput: HTMLInputElement;
 	private tagsInput: HTMLInputElement;
 	private monacoWrapper: MonacoWrapper;
-
+	private topicId: string;
 	public static start() {
 		(<any>window).require(['vs/editor/editor.main'], () => {
 			new this().init();
@@ -25,19 +19,38 @@ class TopicEditApp {
 	private init() {
 		this.monacoWrapper = new MonacoWrapper();
 		this.monacoWrapper.init();
+		this.topicId = document.querySelector(`[name=topic-id]`).getAttribute("data-value");
 		this.titleInput = <HTMLInputElement> document.querySelector(".input-title");
 		this.tagsInput = <HTMLInputElement> document.querySelector(".input-tags");
 		const submitButton = <HTMLButtonElement> document.querySelector(".submit-button");
 		submitButton.addEventListener("click", () => {
 			MyRequest.rest<ResPostTopic>({
-				method: "POST",
-				path: "/api/topic",
+				method: this.topicId ? "PUT" : "POST",
+				path: this.topicId ? `/api/topic/${this.topicId}` : `/api/topic`,
 				reqBody: this.getValues()
 			}).then((res) => {
 				window.location.href = `/topic/${res.id}`;
 			});
 		});
 		this.registerTagHighLight();
+		if	(this.topicId) {
+			this.setDataToInput();
+		} else {
+			MyRequest.toggleLoadingAnime(false);
+		}
+	}
+
+	/** inputにデータをセットする、編集時のみ実行 */
+	private setDataToInput() {
+		MyRequest.rest<TopicInfo>({
+			method: "GET",
+			path: `/api/topic/${this.topicId}`
+		}).then(res => {
+			this.titleInput.value = res.title,
+			this.tagsInput.value = res.tags.join(" ");
+			this.monacoWrapper.setValue(res.bodyMd);
+			this.tagsInput.dispatchEvent(new Event("keyup"));
+		});
 	}
 
 	/** タグがハイライト化するようにする */
@@ -51,6 +64,7 @@ class TopicEditApp {
 
 	private getValues(): TopicEditForm {
 		return {
+			_id: this.topicId,
 			title: this.titleInput.value,
 			tags: this.tagsInput.value ? this.tagsInput.value.split(" ") : [],
 			bodyMd: this.monacoWrapper.getValue()

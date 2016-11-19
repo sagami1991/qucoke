@@ -29,6 +29,9 @@ export class MonacoWrapper {
 		return this.editor.getValue();
 	}
 
+	public setValue(text: string) {
+		this.editor.setValue(text);
+	}
 	/** プレビュー領域に描写する */
 	private render() {
 		this.previewContent.innerHTML = marked(this.editor.getValue());

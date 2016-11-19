@@ -19,7 +19,7 @@ interface MyRequestOption {
 				if (xhr.status !== 200) {
 					SmartDialog.open({
 						dialogType: "ERROR",
-						msg: JSON.parse(xhr.responseText).message
+						msg: xhr.status === 404 ? "404 NOTFOUND" : JSON.parse(xhr.responseText).message
 					});
 				} else {
 					resolve(JSON.parse(xhr.responseText));
@@ -35,10 +35,16 @@ interface MyRequestOption {
 			} else {
 				xhr.send();
 			}
+		}).catch((err) => {
+			this.toggleLoadingAnime(false);
+			SmartDialog.open({
+				dialogType: "ERROR",
+				msg: "予期せぬエラーが発生しました"
+			});
 		});
 	 }
 
-	 private static toggleLoadingAnime(isOn: boolean) {
+	 public static toggleLoadingAnime(isOn: boolean) {
 		 document.body.classList.toggle("loading", isOn);
 	 }
  }

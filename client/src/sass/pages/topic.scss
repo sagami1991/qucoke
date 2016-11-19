@@ -6,46 +6,74 @@
 	width: 100%;
 	.topic-header {
 		background-color: rgba(78,105,109,0.8);
+		color: $white;
 		@include panelShadow();
-		.topic-header-container {
-			max-width: $baseWidth;
-			margin: 0 auto;
-			display: flex;
-			
-		}
-		.h1{
-			color:$white;
-			line-height: 90px;
-		}
-		.right-parts {
-			margin: 0 10px 0 auto;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			&, .material-icons {
-				color: $white;
+		padding: 10px 20px;
+		@media #{$mobile} {
+			flex-direction: column;
+			.right-parts {
+				margin: 10px 0;
+				flex-direction: column;
 			}
-			.view-count {
-				margin-right: 18px;
+		}
+		.topic-header-top {
+			display: flex;
+			.h1 {
+				width: 70%;
+				word-break: break-all;
 			}
-			.view-count, .comment-count {
-				.flex {
-					display: flex;
-					align-items: center;
-					
-				}
-				.material-icons {
-					font-size: 16px;
-					margin-right: 4px;
-				}
-				.font-12 {
-					margin-right: 4px;
-				}
+			.right-parts {
 				display: flex;
-				align-items: baseline;
+				justify-content: center;
+				align-items: center;
+				&, .material-icons {
+					color: $white;
+				}
+				.view-count, .comment-count {
+					margin-right: 18px;
+					.flex {
+						display: flex;
+						align-items: center;
+						
+					}
+					.material-icons {
+						font-size: 16px;
+						margin-right: 4px;
+					}
+					.font-12 {
+						margin-right: 4px;
+					}
+					display: flex;
+					align-items: baseline;
+				}
 			}
 		}
+		.topic-info-header {
+			display: flex;
+			align-items: center;
+			.tags {
+				display: flex;
+				margin-right: 20px;
+				.tag {
+					padding: 0 6px;
+					border-radius: 3px;
+					margin-right: 3px;
+					font-size: 12px;
+					background-color: #d2d2d2;
+					color: $fontGray;
+				}
+			}
+			.post-date {
+				font-size: 14px;
+				margin-right: 40px;
+				color: rgba(255,255,255,0.7);
+			}
+			.command-container {
+				display: flex;
+				justify-content: center;
+			}
 
+		}
 	}
 	.markdown-container {
 		background-color: $white;

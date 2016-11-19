@@ -19,7 +19,7 @@
 	&:hover, &.hover {
 		background-color: #e0e0e0;
 	}
-	@media screen and (max-width: $mobile-width) {
+	@media #{$mobile} {
 		padding: 0 8px;
 		.material-icons {
 			margin: 0;

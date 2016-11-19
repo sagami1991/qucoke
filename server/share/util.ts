@@ -28,7 +28,8 @@ export class MyUtil {
 		}
 	}
 
-	static sendError(res: Response, message: string) {
-		res.status(500).send({message: message});
+	static sendError(res: Response, message?: string) {
+		const errMsg = message ? message : CONF_VAR.ERR_MSG.unexpected_error;
+		res.status(500).send({message: errMsg});
 	}
 }

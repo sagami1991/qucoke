@@ -6,7 +6,7 @@ $bgWhite: #fbfbfb;
 $baseWidth: 980px;
 $orange: #ba3c23;
 
-$mobile-width: 480px;
+$mobile: "screen and (max-width: 480px)";
 
 @mixin panelShadow {
 	box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;

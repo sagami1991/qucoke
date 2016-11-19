@@ -15,6 +15,7 @@ export interface ValidateRule {
 export interface TopicInfo {
 	_id?: string;
     postDate: Date;
+	editDate: Date;
     title: string;
 	/** DBのカラムでは生成しない */
     commentCount: number;
@@ -28,9 +29,12 @@ export interface TopicInfo {
 }
 
 export interface TopicEditForm {
+	_id?: string;
+	userId?: string;
 	title: string;
 	tags: string[];
 	bodyMd: string;
+	bodyHtml?: string;
 }
 
 export interface Comment {

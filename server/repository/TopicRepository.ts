@@ -1,7 +1,8 @@
 import {Collection, ObjectID} from 'mongodb';
 import {
 	TopicInfo,
-	Comment
+	Comment,
+	TopicEditForm
 } from "../share/Interfaces";
 
 export class TopicRepository {
@@ -25,6 +26,21 @@ export class TopicRepository {
 
 	public addOne(topic: TopicInfo) {
 		return this.topicsDb.insertOne(topic);
+	}
+
+	public updateOne(topic: TopicEditForm) {
+		return this.topicsDb.updateOne({
+			_id: new ObjectID(topic._id),
+			userId: topic.userId
+		}, {
+			$set: {
+				title: topic.title,
+				tags: topic.tags,
+				bodyMd: topic.bodyMd,
+				bodyHtml: topic.bodyHtml,
+				editDate: new Date()
+			}
+		});
 	}
 
 	public addComment(topicId: string, comment: Comment) {

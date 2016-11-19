@@ -23,7 +23,7 @@
 	<div class="buttons-row">
 		<button class="button submit-button">
 			<i class="material-icons">file_upload</i>
-			投稿する
+			{{#if topicId}} 上書き投稿する {{else}} 投稿する {{/if}}
 		</button>
 	</div>
 </div>

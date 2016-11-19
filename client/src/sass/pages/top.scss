@@ -23,7 +23,7 @@
 	}
 	.links-container {
 		margin-top: 10px;
-		@media screen and (max-width: $mobile-width) {
+		@media #{$mobile} {
 			display: block;
 		}
 		display: flex;

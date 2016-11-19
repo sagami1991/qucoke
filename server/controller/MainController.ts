@@ -15,7 +15,7 @@ export class MainController {
 
 	private addPersonCookie(req: Request, res: Response, next: (err?: any) => void) {
 		if (typeof req.cookies[CONF_VAR.COOKIE_PID] === "undefined") {
-			res.cookie(CONF_VAR.COOKIE_PID, uuid.v4());
+			res.cookie(CONF_VAR.COOKIE_PID, uuid.v4(), {expires: new Date(2038, 0, 0, 0, 0, 0, 0)});
 		}
 		next();
 	}
@@ -37,11 +37,12 @@ export class MainController {
 
 	/** 投稿ページ */
 	private editTopic(req: Request, res: Response) {
-		const topicId = req.params["topic-id"];
+		const topicId = req.params["id"];
 		res.render("topic-edit", {
 			title: topicId ? "記事を編集" : "記事を作成",
 			hidePostTopicButton: true,
-			topicId: topicId
+			topicId: topicId,
+			loadingPage: true
 		});
 	}
 }
