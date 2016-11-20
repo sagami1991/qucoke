@@ -24,3 +24,8 @@ export function timeago(kariDate: Date | number) {
 		return d.getUTCSeconds() + '秒前';
 	}
 }
+
+/** 最後のパス名を取得 */
+export function getLastPath(url: string) {
+	return url.replace(/\/$/, '').substr(url.lastIndexOf('/') + 1);
+}

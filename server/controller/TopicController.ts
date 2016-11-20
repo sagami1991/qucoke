@@ -22,6 +22,7 @@ export class TopicController {
 		this.app.put('/api/topic/:id', (req, res) => this.updateTopic(req, res));
 		this.app.post("/api/topic/:id/comment/", (req, res) => this.addComment(req, res));
 		this.app.post("/api/topic", (req, res) => this.addTopic(req, res));
+		this.app.delete('/api/topic/:id', (req, res) => this.deleteTopic(req, res));
 	}
 
 	/** 記事を一件返す */
@@ -127,6 +128,20 @@ export class TopicController {
 			}
 			res.send({
 				id: reqTopic._id
+			});
+		});
+	}
+
+	private deleteTopic(req: Request, res: Response) {
+		const id = req.params["id"];
+		const userId = req.cookies[CONF_VAR.COOKIE_PID];
+		this.topicRepository.deleteOne(id, userId).then((result) => {
+			if (result.deletedCount === 0) {
+				MyUtil.sendError(res);
+				return;
+			}
+			res.send({
+				id: id
 			});
 		});
 	}

@@ -1,3 +1,5 @@
+<meta name="topic-id" value="{{topic._id}}" id="meta-topic-id">
+
 <div class="topic-page">
 	<div class="topic-header">
 		<div class="topic-header-top">
@@ -29,6 +31,7 @@
 			{{#if isMyTopic}}
 				<div class="command-container">
 					<a class="button" href="/topic-edit/{{topic._id}}"><i class="material-icons">edit</i>編集</a>
+					<a class="button remove-button" href="javascript:void(0)"><i class="material-icons">delete</i>削除</a>
 				</div>
 			{{/if}}
 		</div>
@@ -53,7 +56,6 @@
 		<div class="border" style="margin: 50px 0;"></div>
 		<form class="post-comment-container">
 			<h2 class="h2 font-16" style="margin-bottom:10px;">コメントを投稿</h2>
-			<input type="hidden" name="topic-id" value="{{topic._id}}">
 			<textarea name="comment" rows="4" placeholder="コメントを入力" class="textarea myinput"></textarea>
 			<button class="button" type="submit"><i class="material-icons">edit</i>投稿</button>
 		</form>

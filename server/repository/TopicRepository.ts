@@ -43,6 +43,12 @@ export class TopicRepository {
 		});
 	}
 
+	public deleteOne(id: string, userId: string) {
+		return this.topicsDb.deleteOne({
+			_id: new ObjectID(id),
+			userId: userId
+		});
+	}
 	public addComment(topicId: string, comment: Comment) {
 		return this.topicsDb.update(
 			{_id: new ObjectID(topicId)},

@@ -53,4 +53,10 @@ interface MyRequestOption {
 	 public static toggleLoadingAnime(isOn: boolean) {
 		 document.body.classList.toggle("loading", isOn);
 	 }
+
+	 /** ページ遷移 */
+	 public static navigatePage(url: string) {
+		 this.toggleLoadingAnime(true);
+		 window.location.href = url;
+	 }
  }
