@@ -65,7 +65,7 @@ export class TopicController {
 			}
 			if (!req.cookies[CONF_VAR.COOKIE_ACCESSED]) {
 				const date = new Date();
-				date.setDate(date.getDay() + 1);
+				date.setDate(date.getDate() + 1);
 				res.cookie(CONF_VAR.COOKIE_ACCESSED, "1", {expires: date, path: req.path});
 				this.topicRepository.addViewCount(req.params["id"]);
 			}
