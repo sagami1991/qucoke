@@ -1,35 +1,26 @@
-import {CONF_VAR,
-	TopicInfo,
-	TopicEditForm,
-	ValidateRule
-} from "./Interfaces";
-import {Express, Request, Response} from 'express';
-import * as marked from "marked";
+// import {CONF_VAR,
+// 	TopicInfo,
+// 	TopicEditForm,
+// 	ValidateRule
+// } from "./Interfaces";
 
-class MyRenderer extends marked.Renderer {
-	link(href: string, title: string, text: string) {
-		return `<a href="${href}" target="_blank">${text}</a>`;
-	}
-}
+/** n分前　のような書式で返す */
+export function timeago(kariDate: Date | number) {
+	const date = kariDate instanceof Date ? kariDate : new Date(kariDate);
+	const diff = new Date().getTime() - date.getTime()
+	const d = new Date(diff);
 
-export function getMarked() {
-	marked.setOptions({renderer: new MyRenderer()});
-	return marked;
-}
-
-
-export class MyUtil {
-	static validate(rules: ValidateRule[]) {
-		for ( let {rule, msg} of rules) {
-			if (!rule) {
-				const errMsg = msg ? msg : CONF_VAR.ERR_MSG.unexpected_error;
-				throw new Error(errMsg);
-			}
-		}
-	}
-
-	static sendError(res: Response, message?: string) {
-		const errMsg = message ? message : CONF_VAR.ERR_MSG.unexpected_error;
-		res.status(500).send({message: errMsg});
+	if (d.getUTCFullYear() - 1970) {
+		return d.getUTCFullYear() - 1970 + '年前';
+	} else if (d.getUTCMonth()) {
+		return d.getUTCMonth() + 'ヶ月前';
+	} else if (d.getUTCDate() - 1) {
+		return d.getUTCDate() - 1 + '日前';
+	} else if (d.getUTCHours()) {
+		return d.getUTCHours() + '時間前';
+	} else if (d.getUTCMinutes()) {
+		return d.getUTCMinutes() + '分前';
+	} else {
+		return d.getUTCSeconds() + '秒前';
 	}
 }

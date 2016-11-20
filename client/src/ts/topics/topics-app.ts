@@ -1,11 +1,15 @@
 import {MyRequest} from "../commons/request";
 import {TopicInfo} from "../../../../server/share/Interfaces";
+import {timeago} from "../../../../server/share/util";
 import * as Handlebars from "handlebars";
 import dateFormat = require('dateformat');
 class TopicsApp {
 	public static start() {
 		Handlebars.registerHelper("myDateFormat", (date: Date) => {
 			return dateFormat(date, "yyyy/mm/dd HH:MM");
+		});
+		Handlebars.registerHelper("timeago", (date: Date) => {
+			return timeago(date);
 		});
 		new ListComponent(<HTMLElement> document.querySelector(".single-page-container")).init();
 	}
@@ -19,7 +23,7 @@ class ListComponent {
 		{{#each topics}}
 			<li class="topics-li">
 				<div class="left-parts">
-					<div class="post-date">{{myDateFormat postDate}}</div>
+					<div class="post-date">{{timeago postDate}} に投稿</div>
 					<a class="title" href="/topic/{{_id}}">{{title}}</a>
 					<div class="tags">
 						{{#each tags}}

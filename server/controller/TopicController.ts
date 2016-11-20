@@ -7,7 +7,7 @@ import {CONF_VAR,
 	Comment
 } from "../share/Interfaces";
 
-import {MyUtil, getMarked} from "../share/util";
+import {MyUtil, getMarked} from "../share/serverUtil";
 import * as marked from "marked";
 import {TopicRepository} from "../repository/TopicRepository";
 

@@ -13,6 +13,7 @@ import {MongoClient, Db} from 'mongodb';
 import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
 import * as compression from "compression";
+import {timeago} from "./share/util";
 
 class Application {
 	private static db: Db;
@@ -31,7 +32,8 @@ class Application {
 			extname: ".hbs",
 			layoutsDir: `${__dirname}/templates`,
 			helpers: {
-				myDateFormat: (date: Date) => dateFormat(date, "yyyy/mm/dd HH:MM")
+				myDateFormat: (date: Date) => dateFormat(date, "yyyy/mm/dd HH:MM"),
+				timeago: (date: Date) => timeago(date),
 			}
 		}));
 		app.set('views', `${__dirname}/templates`);
