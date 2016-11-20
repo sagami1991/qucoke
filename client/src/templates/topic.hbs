@@ -46,7 +46,7 @@
 				<h2 class="h2 font-16">コメント一覧</h2>
 				{{#each topic.comments}}
 					<div class="comment-row">
-						<div class="post-date">{{myDateFormat postDate}}</div>
+						<div class="post-date">{{timeago postDate}} に投稿</div>
 						<div class="comment-body">{{body}}</div>
 					</div>
 				{{/each}}
