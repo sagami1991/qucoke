@@ -3,6 +3,10 @@ class MyRenderer extends marked.Renderer {
 	link(href: string, title: string, text: string) {
 		return `<a href="${href}" target="_blank">${text}</a>`;
 	}
+
+	// image(href: string, title: string, text: string) {
+	// 	return `<img src=/>`
+	// }
 }
 export class AceWrapper {
 	private editor: AceAjax.Editor;
