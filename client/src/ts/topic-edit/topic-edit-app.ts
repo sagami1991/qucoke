@@ -2,13 +2,14 @@
  * @file 記事の作成・編集ページ
  */
 import {MonacoWrapper} from "./monaco-editor-wrapper";
+import {AceWrapper} from "./ace-editor-wrapper";
 import {MyRequest} from "../commons/request";
 import {ResPostTopic, TopicEditForm, TopicInfo} from "../../../../server/share/Interfaces";
 
 class TopicEditApp {
 	private titleInput: HTMLInputElement;
 	private tagsInput: HTMLInputElement;
-	private monacoWrapper: MonacoWrapper;
+	private monacoWrapper: AceWrapper;
 	private topicId: string;
 	public static start() {
 		(<any>window).require(['vs/editor/editor.main'], () => {
@@ -17,7 +18,7 @@ class TopicEditApp {
 	}
 
 	private init() {
-		this.monacoWrapper = new MonacoWrapper();
+		this.monacoWrapper = new AceWrapper();
 		this.monacoWrapper.init();
 		this.topicId = document.querySelector(`[name=topic-id]`).getAttribute("data-value");
 		this.titleInput = <HTMLInputElement> document.querySelector(".input-title");
@@ -36,6 +37,7 @@ class TopicEditApp {
 		if	(this.topicId) {
 			this.setDataToInput();
 		} else {
+			this.monacoWrapper.setValue(require("raw!./resource/sample-md.md"));
 			MyRequest.toggleLoadingAnime(false);
 		}
 	}

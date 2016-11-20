@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ace-builds": "^1.2.5",
     "core-js": "^2.4.1",
     "dateformat": "^1.0.12",
     "handlebars": "^4.0.5",
@@ -19,6 +20,7 @@
     "monaco-editor": "^0.7.0"
   },
   "devDependencies": {
+    "@types/ace": "0.0.32",
     "@types/core-js": "^0.9.29",
     "@types/handlebars": "^3.0.28",
     "@types/marked": "0.0.28",

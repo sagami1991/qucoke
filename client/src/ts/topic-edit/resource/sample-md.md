@@ -1,9 +1,8 @@
 ## editorの操作方法
 * <kbd>Alt + 上下</kbd>で行or選択している行の移動ができます
-* <kbd>Ctrl + Shift + K</kbd>で行の削除が行えます
+* <kbd>Ctrl + D</kbd>で行の削除が行えます
 * <kbd>Tab</kbd>でインデントが行えます
 * <kbd>Shift + Tab</kbd>で逆インデントが行えます
-* そのまま<kbd>Ctrl+C</kbd>で行がコピーされます
 
 ---
 
@@ -38,19 +37,16 @@
 
 
 ### テキストリンク
-linkと入力すれば入力候補が出ます。  
 URLはそのまま貼ればそのままリンクになります。  
 http://link  
 [text](http://link)
 
 
 ### 画像
-imageと入力すれば入力候補が出ます  
 画像アップロードサービスは [imgur](http://imgur.com/) 等が便利です  
 ![alt](http://archives.jpn.org/name/images/0126.jpg)
 
 ### テーブル
-tableと入力すれば入力候補が出ます
 
 | Tables        | Are           | Cool  |
 | ------------- |:-------------:| -----:|

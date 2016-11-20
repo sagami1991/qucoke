@@ -44,7 +44,12 @@ class ListComponent {
 	constructor(private $container: HTMLElement) {}
 
 	public init() {
-		MyRequest.rest<TopicInfo[]>({method: "GET", path: "/api/topics"}).then((topics) => {
+		const isMyself = document.querySelector("meta[name=myself]");
+		const query = !isMyself ? [] : [{
+			key: "myself",
+			value: true
+		}];
+		MyRequest.rest<TopicInfo[]>({method: "GET", path: "/api/topics", query: query}).then((topics) => {
 			this.$container.innerHTML = ListComponent.LIST_TEMPL({topics: topics});
 		});
 	}

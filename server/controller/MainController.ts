@@ -27,19 +27,19 @@ export class MainController {
 
 	/** 記事一覧 */
 	private topics(req: Request, res: Response) {
-		res.render("topics", {title: "記事一覧"});
+		res.render("topics", {title: "記事一覧 - Qucoke.com"});
 	}
 
 	/** 自分の投稿した記事一覧 */
 	private myTopics(req: Request, res: Response) {
-		res.render("topics", {title: "投稿した記事一覧"});
+		res.render("my-page", {title: "投稿した記事一覧 - Qucoke.com", myself: true});
 	}
 
 	/** 投稿ページ */
 	private editTopic(req: Request, res: Response) {
 		const topicId = req.params["id"];
 		res.render("topic-edit", {
-			title: topicId ? "記事を編集" : "記事を作成",
+			title: (topicId ? "記事を編集" : "記事を作成") + " - Qucoke.com",
 			hidePostTopicButton: true,
 			topicId: topicId,
 			loadingPage: true

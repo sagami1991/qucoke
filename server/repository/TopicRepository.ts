@@ -12,8 +12,8 @@ export class TopicRepository {
 		return this.topicsDb.findOne({_id: new ObjectID(id)});
 	}
 
-	public findAllForList(limit: number) {
-		return this.topicsDb.find({}, {
+	public findAllForList(limit: number, where?: {[key: string]: string}) {
+		return this.topicsDb.find(where ? where : {}, {
 			_id: 1,
 			postDate: 1,
 			title: 1,

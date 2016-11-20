@@ -35,7 +35,8 @@ module.exports = [{
 	},
 	plugins: [
 		new CopyWebpackPlugin([
-			{ from: 'node_modules/monaco-editor/min/vs', to: 'vs'},
+			// { from: 'node_modules/monaco-editor/min/vs', to: 'vs'},
+			{ from: 'node_modules/ace-builds/src-min', to: 'ace-builds/'},
 			{ from: 'src/resource', to: 'resource' },
 			{ from: 'src/templates', to: '../templates' }
 		]),

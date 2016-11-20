@@ -5,6 +5,10 @@ interface MyRequestOption {
 	method: "GET" | "POST" | "PUT" | "DELETE";
 	path: string;
 	reqBody?: any;
+	query?: {
+		key: string,
+		value: string | boolean | number
+	}[];
 }
 
  export class MyRequest {
@@ -13,7 +17,9 @@ interface MyRequestOption {
 		this.toggleLoadingAnime(true);
 		return new Promise<T>((resolve, reject) => {
 			const xhr = new XMLHttpRequest();
-			xhr.open(option.method, option.path);
+			const url = !option.query ? option.path :
+				option.path + "?" + option.query.map(q => `${q.key}=${q.value}&`);
+			xhr.open(option.method, url);
 			xhr.onload = () => {
 				this.toggleLoadingAnime(false);
 				if (xhr.status !== 200) {

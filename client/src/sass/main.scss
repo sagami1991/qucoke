@@ -53,17 +53,15 @@ a {
     line-height: inherit;
 }
 
-input[type="text"],
-textarea {
+.myinput {
 	outline: none;
 	border: 1px solid #aaa;
 	-webkit-transition: all .3s;
 	transition: all .3s;
-}
-input[type="text"]:focus,
-textarea:focus {
-	box-shadow: 0 0 7px $lightBlue;
-	border: 1px solid $lightBlue;
+	&:focus {
+		box-shadow: 0 0 7px $lightBlue;
+		border: 1px solid $lightBlue;
+	}
 }
 
 .h1, .h2, .h3 { margin:0 }

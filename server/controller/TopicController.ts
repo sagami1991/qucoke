@@ -1,5 +1,5 @@
 import {Express, Request, Response} from 'express';
-import {Collection} from 'mongodb';
+import {Collection, Cursor} from 'mongodb';
 import {CONF_VAR,
 	TopicInfo,
 	TopicEditForm,
@@ -37,7 +37,16 @@ export class TopicController {
 
 	/** 記事一覧を渡す */
 	private getTopics(req: Request, res: Response) {
-		this.topicRepository.findAllForList(30).toArray((err, arr) => {
+		let promise: Cursor;
+		if (req.query["myself"]) {
+			const searchObj = {
+				userId: req.cookies[CONF_VAR.COOKIE_PID]
+			};
+			promise = this.topicRepository.findAllForList(30, searchObj);
+		} else {
+			promise = this.topicRepository.findAllForList(30);
+		}
+		promise.toArray((err, arr) => {
 		if (err) {
 			MyUtil.sendError(res, err.message);
 			return;
