@@ -10,23 +10,29 @@
 		@include panelShadow();
 		padding: 10px 20px;
 		@media #{$mobile} {
-			flex-direction: column;
+			.topic-header-top {
+				flex-direction: column;
+			}
 			.right-parts {
 				margin: 10px 0;
-				flex-direction: column;
+				/*flex-direction: column;*/
+			}
+			.command-container {
+				.button-text {
+					display: none;
+				}
 			}
 		}
 		.topic-header-top {
 			display: flex;
 			.h1 {
-				width: 70%;
 				word-break: break-all;
 				margin-right: 18px;
 			}
 			.right-parts {
 				display: flex;
-				justify-content: center;
 				align-items: center;
+				min-width: 200px;
 				&, .material-icons {
 					color: $white;
 				}
@@ -54,19 +60,22 @@
 			align-items: center;
 			.tags {
 				display: flex;
+				flex-wrap: wrap;
 				margin-right: 20px;
 				.tag {
+					white-space: nowrap;
 					padding: 0 6px;
 					border-radius: 3px;
 					margin-right: 3px;
 					font-size: 12px;
 					background-color: #d2d2d2;
 					color: $fontGray;
+					margin-bottom: 3px;
 				}
 			}
 			.post-date {
 				font-size: 14px;
-				margin-right: 40px;
+				margin-right: 20px;
 				color: rgba(255,255,255,0.7);
 			}
 			.command-container {

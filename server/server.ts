@@ -5,7 +5,8 @@ import {Express, Request, Response} from 'express';
 
 import * as exphbs from 'express-handlebars';
 import {MainController} from "./controller/MainController";
-import {TopicController} from "./controller/TopicController";
+import {TopicApiController} from "./controller/TopicController";
+import {TopicPageController} from "./controller/TopicPageController";
 
 import {TopicRepository} from "./repository/TopicRepository";
 import dateFormat = require('dateformat');
@@ -48,7 +49,8 @@ class Application {
 		}));
 		const topicRepository = new TopicRepository(this.db.collection("topics"));
 		new MainController(app).init();
-		new TopicController(app, topicRepository).init();
+		new TopicApiController(app, topicRepository).init();
+		new TopicPageController(app, topicRepository).init();
 		app.use(express.static(__dirname + '/public'));
 		app.use((err: Error, req: Request, res: Response, next: express.NextFunction) => {
 			res.status(500);

@@ -1,5 +1,5 @@
 import {Express, Request, Response,} from 'express';
-import {TopicController} from "./TopicController";
+import {TopicApiController} from "./TopicController";
 import {CONF_VAR} from "../share/Interfaces";
 import * as uuid from "node-uuid";
 export class MainController {
@@ -7,10 +7,6 @@ export class MainController {
 	public init() {
 		this.app.use((req, res, next) => this.addPersonCookie(req, res, next));
 		this.app.get('/', (req, res) => this.top(req, res));
-		this.app.get('/topics', (req, res) => this.topics(req, res));
-		this.app.get('/my-topics', (req, res) => this.myTopics(req, res));
-		this.app.get('/topic-edit/:id', (req, res) => this.editTopic(req, res));
-		this.app.get('/topic-edit/', (req, res) => this.editTopic(req, res));
 	}
 
 	private addPersonCookie(req: Request, res: Response, next: (err?: any) => void) {
@@ -23,26 +19,5 @@ export class MainController {
 	/** トップページ */
 	private top(req: Request, res: Response) {
 		res.render("top", {title: "Qucoke.com", hideHeader: true});
-	}
-
-	/** 記事一覧 */
-	private topics(req: Request, res: Response) {
-		res.render("topics", {title: "記事一覧 - Qucoke.com"});
-	}
-
-	/** 自分の投稿した記事一覧 */
-	private myTopics(req: Request, res: Response) {
-		res.render("my-page", {title: "投稿した記事一覧 - Qucoke.com", myself: true});
-	}
-
-	/** 投稿ページ */
-	private editTopic(req: Request, res: Response) {
-		const topicId = req.params["id"];
-		res.render("topic-edit", {
-			title: (topicId ? "記事を編集" : "記事を作成") + " - Qucoke.com",
-			hidePostTopicButton: true,
-			topicId: topicId,
-			loadingPage: true
-		});
 	}
 }

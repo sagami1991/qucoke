@@ -1,5 +1,5 @@
 import {Express, Request, Response} from 'express';
-import {Collection, Cursor} from 'mongodb';
+import {Cursor} from 'mongodb';
 import {CONF_VAR,
 	TopicInfo,
 	TopicEditForm,
@@ -11,12 +11,11 @@ import {MyUtil, getMarked} from "../share/serverUtil";
 import * as marked from "marked";
 import {TopicRepository} from "../repository/TopicRepository";
 
-/** 記事ページや、記事のAPIを管理するコントローラー */
-export class TopicController {
+/** 記事のAPIを管理するコントローラー */
+export class TopicApiController {
 	constructor(private app: Express,
 				private topicRepository: TopicRepository) {}
 	public init() {
-		this.app.get('/topic/:id', (req, res) => this.viewTopicPage(req, res));
 		this.app.get('/api/topic/:id', (req, res) => this.getTopic(req, res));
 		this.app.get("/api/topics", (req, res) => this.getTopics(req, res));
 		this.app.put('/api/topic/:id', (req, res) => this.updateTopic(req, res));
@@ -53,27 +52,6 @@ export class TopicController {
 			return;
 		}
 		res.send(arr.sort((bef, af ) => af.postDate - bef.postDate));
-		});
-	}
-
-	/** 記事ページを返す */
-	private viewTopicPage(req: Request, res: Response) {
-		this.topicRepository.findOne(req.params["id"]).then((topic) => {
-			if (!topic) {
-				MyUtil.sendError(res, "存在しない記事です。");
-				return;
-			}
-			if (!req.cookies[CONF_VAR.COOKIE_ACCESSED]) {
-				const date = new Date();
-				date.setDate(date.getDate() + 1);
-				res.cookie(CONF_VAR.COOKIE_ACCESSED, "1", {expires: date, path: req.path});
-				this.topicRepository.addViewCount(req.params["id"]);
-			}
-			res.render("topic", {
-				title: `${topic.title} - Qucoke`,
-				topic: topic,
-				isMyTopic: topic.userId === req.cookies[CONF_VAR.COOKIE_PID]
-			});
 		});
 	}
 
@@ -154,6 +132,7 @@ export class TopicController {
 			{ rule: reqBody.title.length < 60, msg: "タイトルは60文字以内で入力してください"},
 			{ rule: reqBody.tags instanceof Array},
 			{ rule: reqBody.tags.length < 5, msg: "タグは4個以内に設定してください"},
+			{ rule: reqBody.tags.every(tag => tag.length <= 6), msg: "タグは6文字以下で設定してください"},
 			{ rule: typeof reqBody.bodyMd === "string"},
 			{ rule: reqBody.bodyMd.length < 300000, msg: "記事の内容が300KBを超えています"}
 		];

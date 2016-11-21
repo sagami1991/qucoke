@@ -30,8 +30,8 @@
 			<div class="post-date">{{timeago topic.postDate}} に投稿</div>
 			{{#if isMyTopic}}
 				<div class="command-container">
-					<a class="button" href="/topic-edit/{{topic._id}}"><i class="material-icons">edit</i>編集</a>
-					<a class="button remove-button" href="javascript:void(0)"><i class="material-icons">delete</i>削除</a>
+					<a class="button" href="/topic-edit/{{topic._id}}"><i class="material-icons">edit</i><div class="button-text">編集</div></a>
+					<a class="button remove-button" href="javascript:void(0)"><i class="material-icons">delete</i><div class="button-text">削除</div></a>
 				</div>
 			{{/if}}
 		</div>
