@@ -15,6 +15,7 @@ import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
 import * as compression from "compression";
 import {timeago} from "./share/util";
+import * as helmet from "helmet";
 
 class Application {
 	private static db: Db;
@@ -40,6 +41,7 @@ class Application {
 		app.set('views', `${__dirname}/templates`);
 		app.set('view engine', '.hbs');
 		app.use(cookieParser());
+		app.use(helmet());
 		app.use(bodyParser.urlencoded({ extended: false }));
 		app.use(bodyParser.json());
 		app.use(compression({
