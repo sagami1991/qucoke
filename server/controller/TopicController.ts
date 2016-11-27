@@ -132,7 +132,7 @@ export class TopicApiController {
 			{ rule: reqBody.title.length < 60, msg: "タイトルは60文字以内で入力してください"},
 			{ rule: reqBody.tags instanceof Array},
 			{ rule: reqBody.tags.length < 5, msg: "タグは4個以内に設定してください"},
-			{ rule: reqBody.tags.every(tag => tag.length <= 6), msg: "タグは6文字以下で設定してください"},
+			{ rule: reqBody.tags.every(tag => tag.length <= 10), msg: "タグは10文字以下で設定してください"},
 			{ rule: typeof reqBody.bodyMd === "string"},
 			{ rule: reqBody.bodyMd.length < 300000, msg: "記事の内容が300KBを超えています"}
 		];
