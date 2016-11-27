@@ -1,14 +1,8 @@
 import {Express, Request, Response} from 'express';
-import {Collection, Cursor} from 'mongodb';
 import {CONF_VAR,
-	TopicInfo,
-	TopicEditForm,
-	ValidateRule,
-	Comment
 } from "../share/Interfaces";
 
-import {MyUtil, getMarked} from "../share/serverUtil";
-import * as marked from "marked";
+import {MyUtil} from "../share/serverUtil";
 import {TopicRepository} from "../repository/TopicRepository";
 
 export class TopicPageController {
@@ -49,12 +43,19 @@ export class TopicPageController {
 
 	/** 記事一覧 */
 	private topics(req: Request, res: Response) {
-		res.render("topics", {title: "記事一覧 - Qucoke.com"});
+		res.render("topics", {
+			title: "記事一覧 - Qucoke.com",
+			loadingPage: true
+		});
 	}
 
 	/** 自分の投稿した記事一覧 */
 	private myTopics(req: Request, res: Response) {
-		res.render("my-page", {title: "投稿した記事一覧 - Qucoke.com", myself: true});
+		res.render("my-page", {
+			title: "投稿した記事一覧 - Qucoke.com",
+			loadingPage: true,
+			myself: true
+		});
 	}
 
 	/** 投稿ページ */

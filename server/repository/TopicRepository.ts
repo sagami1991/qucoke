@@ -12,7 +12,7 @@ export class TopicRepository {
 		return this.topicsDb.findOne({_id: new ObjectID(id)});
 	}
 
-	public findAllForList(limit: number, where?: {[key: string]: string}) {
+	public findAllForList(limit: number, skip: number, where?: {[key: string]: string}) {
 		return this.topicsDb.find(where ? where : {}, {
 			_id: 1,
 			postDate: 1,
@@ -21,7 +21,7 @@ export class TopicRepository {
 			viewCount: 1,
 			tags: 1,
 			favoriteCount: 1
-		 }).limit(limit);
+		 }).skip(skip).limit(limit).sort({ $natural: -1 });
 	}
 
 	public addOne(topic: TopicInfo) {

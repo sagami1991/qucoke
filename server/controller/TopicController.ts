@@ -1,5 +1,4 @@
 import {Express, Request, Response} from 'express';
-import {Cursor} from 'mongodb';
 import {CONF_VAR,
 	TopicInfo,
 	TopicEditForm,
@@ -8,7 +7,6 @@ import {CONF_VAR,
 } from "../share/Interfaces";
 
 import {MyUtil, getMarked} from "../share/serverUtil";
-import * as marked from "marked";
 import {TopicRepository} from "../repository/TopicRepository";
 
 /** 記事のAPIを管理するコントローラー */
@@ -37,21 +35,15 @@ export class TopicApiController {
 
 	/** 記事一覧を渡す */
 	private getTopics(req: Request, res: Response) {
-		let promise: Cursor;
-		if (req.query["myself"]) {
-			const searchObj = {
-				userId: req.cookies[CONF_VAR.COOKIE_PID]
-			};
-			promise = this.topicRepository.findAllForList(30, searchObj);
-		} else {
-			promise = this.topicRepository.findAllForList(30);
-		}
-		promise.toArray((err, arr) => {
-		if (err) {
-			MyUtil.sendError(res, err.message);
-			return;
-		}
-		res.send(arr.sort((bef, af ) => af.postDate - bef.postDate));
+		const skip = Number(req.query["offset"]);
+		const searchObj = req.query["myself"] ? { userId: req.cookies[CONF_VAR.COOKIE_PID]} : {};
+		this.topicRepository.findAllForList(CONF_VAR.TOPIC_GET_LIMIT, skip, searchObj)
+		.toArray((err, arr) => {
+			if (err) {
+				MyUtil.sendError(res, err.message);
+				return;
+			}
+			res.send(arr);
 		});
 	}
 

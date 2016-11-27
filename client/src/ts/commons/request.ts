@@ -1,14 +1,15 @@
 import "core-js/es6/promise";
 import {SmartDialog, IconType} from "../commons/smart-dialog";
 
+export interface MyQuery {
+	key: string;
+	value: string | boolean | number;
+}
 interface MyRequestOption {
 	method: "GET" | "POST" | "PUT" | "DELETE";
 	path: string;
 	reqBody?: any;
-	query?: {
-		key: string,
-		value: string | boolean | number
-	}[];
+	querys?: MyQuery[];
 }
 
  export class MyRequest {
@@ -17,8 +18,8 @@ interface MyRequestOption {
 		this.toggleLoadingAnime(true);
 		return new Promise<T>((resolve, reject) => {
 			const xhr = new XMLHttpRequest();
-			const url = !option.query ? option.path :
-				option.path + "?" + option.query.map(q => `${q.key}=${q.value}&`);
+			const url = !option.querys ? option.path :
+				option.path + "?" + option.querys.map(q => `${q.key}=${q.value}`).join("&");
 			xhr.open(option.method, url);
 			xhr.onload = () => {
 				this.toggleLoadingAnime(false);

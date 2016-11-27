@@ -1,5 +1,4 @@
 import {Express, Request, Response,} from 'express';
-import {TopicApiController} from "./TopicController";
 import {CONF_VAR} from "../share/Interfaces";
 import * as uuid from "node-uuid";
 export class MainController {
@@ -11,7 +10,7 @@ export class MainController {
 
 	private addPersonCookie(req: Request, res: Response, next: (err?: any) => void) {
 		if (typeof req.cookies[CONF_VAR.COOKIE_PID] === "undefined") {
-			res.cookie(CONF_VAR.COOKIE_PID, uuid.v4(), {expires: new Date(2038, 0, 0, 0, 0, 0, 0)});
+			res.cookie(CONF_VAR.COOKIE_PID, uuid.v4(), {expires: new Date(2038, 0, 0, 0, 0, 0, 0), httpOnly: true});
 		}
 		next();
 	}
